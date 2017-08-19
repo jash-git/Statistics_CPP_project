@@ -1,0 +1,15 @@
+# depslib dependency file v1.0
+1503145901 source:c:\users\jash\desktop\frequency_distribution_table\main.cpp
+	<iostream>
+	<cstdio>
+	<cmath>
+	"include/CLib.h"
+
+1503145773 c:\users\jash\desktop\frequency_distribution_table\include\clib.h
+
+1503148991 source:c:\users\jash\desktop\frequency_distribution_table\clib.cpp
+	<cstdio>
+
+1503147456 source:c:\users\jash\desktop\frequency_distribution_table\cstatistics.cpp
+	<cmath>
+
