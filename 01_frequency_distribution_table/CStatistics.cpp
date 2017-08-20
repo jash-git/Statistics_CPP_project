@@ -18,13 +18,19 @@ int CStatistics::calRange(int max,int min)//全距(range)=最大值-最小值
 
     return intAns;
 }
-int CStatistics::calNumberOfClass(int nubmber)//組數(number of class)= n<=2^m ,n=資料數量
+int CStatistics::calNumberOfClass(int nubmber,bool blnSturge=false)//組數(number of class)= n<=2^m ,n=資料數量
 {
     int intAns=0;
-
-    do{
-        intAns++;
-    }while(pow(2,intAns)<nubmber);
+    if(!blnSturge)
+    {
+        do{
+            intAns++;
+        }while(pow(2,intAns)<nubmber);
+    }
+    else
+    {
+        intAns=ceil(log10(nubmber)*3.32+1);
+    }
 
     return intAns;
 }
@@ -32,7 +38,7 @@ int CStatistics::calInterval(int range,int number_of_class)//組距(class interv
 {
     int intAns=0;
 
-    intAns=ceil((double)range/number_of_class);
+    intAns=ceil((double)range/number_of_class);//ceil((double)range/number_of_class)
 
     return intAns;
 

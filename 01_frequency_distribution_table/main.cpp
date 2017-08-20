@@ -29,7 +29,7 @@ int main()
     CLib::outputData("range",range);
 
     int number_of_class=0;
-    number_of_class=CStatistics::calNumberOfClass(number);
+    number_of_class=CStatistics::calNumberOfClass(number,true);//Sturge's·¨
     CLib::outputData("number of class",number_of_class);
 
     int class_interval= CStatistics::calInterval(range,number_of_class);
