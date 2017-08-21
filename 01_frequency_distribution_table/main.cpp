@@ -34,7 +34,41 @@ int main()
 
     int class_interval= CStatistics::calInterval(range,number_of_class);
     CLib::outputData("class interval",class_interval);
-    //cout << "Hello world!" << endl;
+    CLib::outputData("------------------------------------------------");
+    char strdata[400];
+
+    int minvalue=0,maxvalue=0;
+    int k=0,count_value=0;;
+    for(int i=0;i<number_of_class;i++)
+    {
+        if(i==0)
+        {
+            minvalue=data[i];
+        }
+        else
+        {
+            minvalue=maxvalue+1;
+        }
+        maxvalue=minvalue+class_interval-1;
+
+        for(int j=0+k;j<number;j++)
+        {
+           if((data[j]>=minvalue)&&(data[j]<=maxvalue))
+           {
+               count_value++;
+           }
+           else
+           {
+               k=j;
+               break;
+           }
+        }
+        sprintf(strdata,"class[%d]\t%d-%d\t%f\t%d",(i+1),minvalue,maxvalue,(minvalue+maxvalue)/2.0,count_value);
+        CLib::outputData(strdata);
+        count_value=0;
+    }
+
+
     CLib::pause();
     return 0;
 }

@@ -30,6 +30,10 @@ void CLib::BubbleSort(int* array, int size)
         }
     }
 }
+void CLib::outputData(char *str)
+{
+    printf("%s\n",str);
+}
 void CLib::outputData(char *title,int data)
 {
     printf("%s: %d\n",title,data);
