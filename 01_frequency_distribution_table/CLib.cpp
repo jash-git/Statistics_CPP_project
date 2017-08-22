@@ -38,6 +38,10 @@ void CLib::outputData(char *title,int data)
 {
     printf("%s: %d\n",title,data);
 }
+void CLib::outputData(char *title,float data)
+{
+    printf("%s: %f\n",title,data);
+}
 void CLib::outputData(char *title,int* data,int number)
 {
 

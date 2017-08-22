@@ -11,6 +11,7 @@ class CLib
         static void BubbleSort(int* array, int size);
         static void outputData(char *str);
         static void outputData(char *title,int data);
+        static void outputData(char *title,float data);
         static void outputData(char *title,int* data,int number);
         static void pause();
     protected:

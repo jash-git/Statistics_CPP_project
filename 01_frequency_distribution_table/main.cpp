@@ -11,6 +11,9 @@ using namespace std;
 1.全距(range)=最大值-最小值
 2.組數(number of class)= n<=2^m ,n=資料數量
 3.組距(class interval)=全距/組數
+4.組中點(class mean)=(min+max)/2
+5.樣本平均數(sample mean)=樣本值總和/總個數
+6.加權平均數(weight average)=組中點*次數的總和/總個數
 ====================*/
 
 int main()
@@ -39,6 +42,10 @@ int main()
 
     int minvalue=0,maxvalue=0;
     int k=0,count_value=0;;
+    float *class_mean = new float[number_of_class];
+    int *class_count = new int[number_of_class];
+    float sample_mean=0.0f;
+    float weight_average=0.0f;
     for(int i=0;i<number_of_class;i++)
     {
         if(i==0)
@@ -63,13 +70,31 @@ int main()
                break;
            }
         }
+        class_mean[i]=(minvalue+maxvalue)/2.0;
+        class_count[i]=count_value;
         sprintf(strdata,"class[%d]\t%d-%d\t%f\t%d",(i+1),minvalue,maxvalue,(minvalue+maxvalue)/2.0,count_value);
         CLib::outputData(strdata);
         count_value=0;
     }
+    CLib::outputData("------------------------------------------------\n");
 
+    for(int i=0;i<number;i++)
+    {
+        sample_mean+=data[i];
+    }
+    sample_mean=sample_mean/number;
+    CLib::outputData("sample mean",sample_mean);
+
+    for(int i=0;i<number_of_class;i++)
+    {
+        weight_average+=(class_mean[i]*class_count[i]);
+    }
+    weight_average=weight_average/number;
+    CLib::outputData("weight average",weight_average);
 
     CLib::pause();
+    delete class_mean;
+    delete class_count;
     return 0;
 }
 
