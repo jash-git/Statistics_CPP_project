@@ -8,8 +8,10 @@ class CStatistics
         CStatistics();
         virtual ~CStatistics();
         static int calRange(int max,int min);//全距(range)=最大值-最小值
+        static double calRange(double max,double min);//全距(range)=最大值-最小值
         static int calNumberOfClass(int nubmber,bool blnSturge);//組數(number of class)= n<=2^m ,n=資料數量;Sturge's法 1+3.32log(n)
         static int calInterval(int range,int number_of_class);//組距(class interval)=全距/組數
+        static double calInterval(double range,int number_of_class);//組距(class interval)=全距/組數
     protected:
     private:
 };

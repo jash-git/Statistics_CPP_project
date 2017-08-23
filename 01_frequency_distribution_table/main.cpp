@@ -18,45 +18,54 @@ using namespace std;
 
 int main()
 {
-    //p2-13,ex2-7
-    int data[]={65,82,47,33,14,22,16,81,57,62,21,83,66,43,47,27,36,51,27,19,66,42,38,29,51,27,40,41};
-
-    int number=sizeof(data)/sizeof(int);//數量
+    //p2-13,ex2-7 int data[]={65,82,47,33,14,22,16,81,57,62,21,83,66,43,47,27,36,51,27,19,66,42,38,29,51,27,40,41};
+    //p2-14,ex2-8
+    double data[]={5.1,5.6,5.3,5.7,5.8,6.4,4.3,5.9,5.4,4.7,5.6,6.8,6.9,4.8,5.6,
+                  6.4,5.9,6.0,5.5,5.4,4.4,5.1,5.6,5.8,5.7,4.9,6.6,5.7,5.4,5.9,
+                  5.6,6.7,5.4,4.8,6.4,5.8,5.3,5.7,6.3,4.5,5.6,6.2,4.2,5.2,5.8,
+                  6.1,5.1,5.9,5.5,4.7};
+    //int number=sizeof(data)/sizeof(int);//數量
+    int number=sizeof(data)/sizeof(double);//數量
     CLib::outputData("data",data,number);
     CLib::outputData("number",number);
 
     CLib::BubbleSort(data,number);
     CLib::outputData("data_Sort",data,number);
 
-    int range=CStatistics::calRange(data[number-1],data[0]);
+    //int range=CStatistics::calRange(data[number-1],data[0]);
+    double range=CStatistics::calRange(data[number-1],data[0]);
     CLib::outputData("range",range);
 
     int number_of_class=0;
     number_of_class=CStatistics::calNumberOfClass(number,true);//Sturge's法
     CLib::outputData("number of class",number_of_class);
 
-    int class_interval= CStatistics::calInterval(range,number_of_class);
+    //int class_interval= CStatistics::calInterval(range,number_of_class);
+    double class_interval= CLib::rounding(CStatistics::calInterval(range,number_of_class),1);
     CLib::outputData("class interval",class_interval);
     CLib::outputData("------------------------------------------------");
     char strdata[400];
 
-    int minvalue=0,maxvalue=0;
+    //int minvalue=0,maxvalue=0;
+    double minvalue=0,maxvalue=0;
     int k=0,count_value=0;;
-    float *class_mean = new float[number_of_class];
+    double *class_mean = new double[number_of_class];
     int *class_count = new int[number_of_class];
-    float sample_mean=0.0f;
-    float weight_average=0.0f;
+    double sample_mean=0.0f;
+    double weight_average=0.0f;
     for(int i=0;i<number_of_class;i++)
     {
         if(i==0)
         {
-            minvalue=data[i];
+            minvalue=CLib::rounding(data[i],1);
         }
         else
         {
-            minvalue=maxvalue+1;
+            //minvalue=maxvalue+1;
+            minvalue=CLib::rounding(maxvalue+0.1,1);//0.1=最小單位
         }
-        maxvalue=minvalue+class_interval-1;
+        //maxvalue=minvalue+class_interval-1;
+        maxvalue=CLib::rounding(minvalue+class_interval-0.1,1);//0.1=最小單位
 
         for(int j=0+k;j<number;j++)
         {
@@ -72,7 +81,8 @@ int main()
         }
         class_mean[i]=(minvalue+maxvalue)/2.0;
         class_count[i]=count_value;
-        sprintf(strdata,"class[%d]\t%d-%d\t%f\t%d",(i+1),minvalue,maxvalue,(minvalue+maxvalue)/2.0,count_value);
+        //sprintf(strdata,"class[%d]\t%d-%d\t%f\t%d",(i+1),minvalue,maxvalue,(minvalue+maxvalue)/2.0,count_value);
+        sprintf(strdata,"class[%d]\t%.2f-%.2f\t%.2f\t%d",(i+1),minvalue,maxvalue,(minvalue+maxvalue)/2.0,count_value);
         CLib::outputData(strdata);
         count_value=0;
     }
