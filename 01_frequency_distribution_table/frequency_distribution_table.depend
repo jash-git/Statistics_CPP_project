@@ -17,10 +17,11 @@
 	<cstdio>
 	<cmath>
 
-1503494252 source:c:\users\jash\desktop\01_frequency_distribution_table\cstatistics.cpp
+1503736059 source:c:\users\jash\desktop\01_frequency_distribution_table\cstatistics.cpp
+	"CLib.h"
 	<cmath>
 
-1503495553 source:c:\users\jash\desktop\01_frequency_distribution_table\main.cpp
+1503735274 source:c:\users\jash\desktop\01_frequency_distribution_table\main.cpp
 	<iostream>
 	<cstdio>
 	<cmath>
@@ -30,5 +31,5 @@
 
 1503494252 c:\users\jash\desktop\01_frequency_distribution_table\clib.h
 
-1503494252 c:\users\jash\desktop\01_frequency_distribution_table\cstatistics.h
+1503736059 c:\users\jash\desktop\01_frequency_distribution_table\cstatistics.h
 

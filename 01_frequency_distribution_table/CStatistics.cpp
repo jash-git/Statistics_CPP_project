@@ -1,4 +1,5 @@
 ﻿#include "CStatistics.h"
+#include "CLib.h"
 #include <cmath>
 
 CStatistics::CStatistics()
@@ -57,4 +58,97 @@ double CStatistics::calInterval(double range,int number_of_class)//組距(class 
     intAns=(range/number_of_class);//ceil((double)range/number_of_class)
 
     return intAns;
+}
+double CStatistics::calSampleMean(double* array, int size)
+{
+    double dblAns=0;
+
+    for(int i=0;i<size;i++)
+    {
+        dblAns+=array[i];
+    }
+    dblAns=dblAns/size;
+
+    return dblAns;
+}
+double CStatistics::calWeightAverage(double* class_mean,int* class_count, int number_of_class,int number)
+{
+    double dblAns=0;
+
+    for(int i=0;i<number_of_class;i++)
+    {
+        dblAns+=(class_mean[i]*class_count[i]);
+    }
+    dblAns=dblAns/number;
+
+    return dblAns;
+}
+void CStatistics::calClassLimit(double* data,int number,double class_interval,double *class_limit_L,double *class_limit_U,double *class_mean,int *class_count,int number_of_class,double Minimum_unit)
+{
+    double minvalue=0,maxvalue=0;
+    int k=0,count_value=0;;
+    for(int i=0;i<number_of_class;i++)
+    {
+        if(i==0)
+        {
+            minvalue=CLib::rounding(data[i],1);
+        }
+        else
+        {
+            //minvalue=maxvalue+1;
+            minvalue=CLib::rounding(maxvalue+Minimum_unit,1);//0.1=最小單位
+        }
+        //maxvalue=minvalue+class_interval-1;
+        maxvalue=CLib::rounding(minvalue+class_interval-Minimum_unit,1);//0.1=最小單位
+
+        for(int j=0+k;j<number;j++)
+        {
+           if((data[j]>=minvalue)&&(data[j]<=maxvalue))
+           {
+               count_value++;
+           }
+           else
+           {
+               k=j;
+               break;
+           }
+        }
+        class_limit_L[i]=minvalue;
+        class_limit_U[i]=maxvalue;
+        class_mean[i]=(minvalue+maxvalue)/2.0;
+        class_count[i]=count_value;
+        count_value=0;
+    }
+}
+double CStatistics::calSampleMedian(double* data,int number)
+{
+    double dblAns=0;
+    if((number%2)==0)
+    {
+        dblAns=data[(number+1)/2];
+    }
+    else
+    {
+        dblAns=(data[(number)/2]+data[(number+1)/2])/2;
+    }
+    return dblAns;
+}
+double CStatistics::calClassMedian(int number_of_class,int number,double *class_limit_U,int *class_count,double class_interval,double Minimum_unit)
+{
+    double dblAns=0;
+    int index=0;
+    int sum=0;
+
+    for(int i=0;i<number_of_class;i++)
+    {
+        sum+=class_count[i];
+        if((number/2)<=sum)
+        {
+            index=i;
+            break;
+        }
+    }
+    dblAns=class_limit_U[index]-(class_interval/class_count[index])*(sum-(number/2))+Minimum_unit;
+
+    return dblAns;
 }

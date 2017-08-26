@@ -14,6 +14,10 @@ using namespace std;
 4.組中點(class mean)=(min+max)/2
 5.樣本平均數(sample mean)=樣本值總和/總個數
 6.加權平均數(weight average)=組中點*次數的總和/總個數
+7.樣本中位數(sample median)
+    數據資料筆數為奇數=第(n+1)/2的值
+    數據資料筆數為偶數=[第n/2+(n+1)/2的兩個值]/2
+8.分組中位數(class median)
 ====================*/
 
 int main()
@@ -24,6 +28,7 @@ int main()
                   6.4,5.9,6.0,5.5,5.4,4.4,5.1,5.6,5.8,5.7,4.9,6.6,5.7,5.4,5.9,
                   5.6,6.7,5.4,4.8,6.4,5.8,5.3,5.7,6.3,4.5,5.6,6.2,4.2,5.2,5.8,
                   6.1,5.1,5.9,5.5,4.7};
+    double Minimum_unit=0.1;
     //int number=sizeof(data)/sizeof(int);//數量
     int number=sizeof(data)/sizeof(double);//數量
     CLib::outputData("data",data,number);
@@ -46,65 +51,40 @@ int main()
     CLib::outputData("------------------------------------------------");
     char strdata[400];
 
-    //int minvalue=0,maxvalue=0;
-    double minvalue=0,maxvalue=0;
-    int k=0,count_value=0;;
     double *class_mean = new double[number_of_class];
     int *class_count = new int[number_of_class];
+    double *class_limit_L = new double[number_of_class];
+    double *class_limit_U = new double[number_of_class];
     double sample_mean=0.0f;
     double weight_average=0.0f;
+
+    CStatistics::calClassLimit(data,number,class_interval,class_limit_L,class_limit_U,class_mean,class_count,number_of_class,Minimum_unit);
     for(int i=0;i<number_of_class;i++)
     {
-        if(i==0)
-        {
-            minvalue=CLib::rounding(data[i],1);
-        }
-        else
-        {
-            //minvalue=maxvalue+1;
-            minvalue=CLib::rounding(maxvalue+0.1,1);//0.1=最小單位
-        }
-        //maxvalue=minvalue+class_interval-1;
-        maxvalue=CLib::rounding(minvalue+class_interval-0.1,1);//0.1=最小單位
-
-        for(int j=0+k;j<number;j++)
-        {
-           if((data[j]>=minvalue)&&(data[j]<=maxvalue))
-           {
-               count_value++;
-           }
-           else
-           {
-               k=j;
-               break;
-           }
-        }
-        class_mean[i]=(minvalue+maxvalue)/2.0;
-        class_count[i]=count_value;
-        //sprintf(strdata,"class[%d]\t%d-%d\t%f\t%d",(i+1),minvalue,maxvalue,(minvalue+maxvalue)/2.0,count_value);
-        sprintf(strdata,"class[%d]\t%.2f-%.2f\t%.2f\t%d",(i+1),minvalue,maxvalue,(minvalue+maxvalue)/2.0,count_value);
+        sprintf(strdata,"class[%d]\t%.2f-%.2f\t%.2f\t%d",(i+1),class_limit_L[i],class_limit_U[i],class_mean[i],class_count[i]);
         CLib::outputData(strdata);
-        count_value=0;
     }
     CLib::outputData("------------------------------------------------\n");
 
-    for(int i=0;i<number;i++)
-    {
-        sample_mean+=data[i];
-    }
-    sample_mean=sample_mean/number;
+    sample_mean=CStatistics::calSampleMean(data, number);
     CLib::outputData("sample mean",sample_mean);
 
-    for(int i=0;i<number_of_class;i++)
-    {
-        weight_average+=(class_mean[i]*class_count[i]);
-    }
-    weight_average=weight_average/number;
+    weight_average=CStatistics::calWeightAverage(class_mean,class_count,number_of_class,number);
     CLib::outputData("weight average",weight_average);
+
+    double sample_median=0;
+    sample_median=CStatistics::calSampleMedian(data,number);
+    CLib::outputData("sample median",sample_median);
+
+    double class_median=0;
+    class_median=CStatistics::calClassMedian(number_of_class,number,class_limit_U,class_count,class_interval,Minimum_unit);
+    CLib::outputData("class median",class_median);
 
     CLib::pause();
     delete class_mean;
     delete class_count;
+    delete class_limit_L;
+    delete class_limit_U;
     return 0;
 }
 
