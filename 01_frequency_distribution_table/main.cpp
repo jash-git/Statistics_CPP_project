@@ -88,6 +88,26 @@ int main()
     class_mad=CStatistics::calClassMAD(number,class_mean,class_count,number_of_class,weight_average);
     CLib::outputData("class mad",class_mad);
 
+    double sample_variance=0;
+    sample_variance=CStatistics::calSampleVariance(data,number,sample_mean);
+    CLib::outputData("sample variance",sample_variance);
+
+    double class_variance=0;
+    class_variance=CStatistics::calClassVariance(number,class_mean,class_count,number_of_class,weight_average);
+    CLib::outputData("class variance",class_variance);
+
+    double sample_standard_deviation=sqrt(sample_variance);//取樣標準差(sample standard deviation)
+    CLib::outputData("sample standard deviation",sample_standard_deviation);
+
+    double class_standard_deviation=sqrt(class_variance);//分組標準差(class standard deviation)
+    CLib::outputData("class standard deviation",class_standard_deviation);
+
+    double sample_CV=sample_standard_deviation/sample_mean;//取樣變異係數(sample coefficient of Variation)
+    CLib::outputData("sample CV",sample_CV);
+
+    double class_CV=class_standard_deviation/weight_average;//分組變異係數(class coefficient of Variation)
+    CLib::outputData("class CV",class_CV);
+
     CLib::pause();
     delete class_mean;
     delete class_count;

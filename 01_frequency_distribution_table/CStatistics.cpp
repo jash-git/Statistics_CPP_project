@@ -172,3 +172,23 @@ double CStatistics::calClassMAD(int number,double* class_mean,int* class_count,i
     dblAns/=number;
     return dblAns;
 }
+double CStatistics::calSampleVariance(double* data,int number,double SampleMean)//樣本變異數(Sample Variance)
+{
+    double dblAns=0;
+    for(int i=0;i<number;i++)
+    {
+        dblAns+=((data[i]-SampleMean) * (data[i]-SampleMean));
+    }
+    dblAns/=(number-1);
+    return dblAns;
+}
+double CStatistics::calClassVariance(int number,double* class_mean,int* class_count,int number_of_class,double WeightAverage)//分組變異數(Class Variance)
+{
+    double dblAns=0;
+    for(int i=0;i<number_of_class;i++)
+    {
+        dblAns+=((class_mean[i]-WeightAverage)*(class_mean[i]-WeightAverage)*class_count[i]);
+    }
+    dblAns/=(number-1);
+    return dblAns;
+}

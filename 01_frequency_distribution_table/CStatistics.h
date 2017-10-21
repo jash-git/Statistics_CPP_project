@@ -19,6 +19,8 @@ class CStatistics
         static double calClassMedian(int number_of_class,int number,double *class_limit_U,int *class_count,double class_interval,double Minimum_unit);//分組中位數(class median)
         static double calSampleMAD(double* data,int number,double SampleMean);//樣本平均差(Sample Mean absolute deviation)
         static double calClassMAD(int number,double* class_mean,int* class_count,int number_of_class,double WeightAverage);//分組平均差(Class Mean absolute deviation)
+        static double calSampleVariance(double* data,int number,double SampleMean);//樣本變異數(Sample Variance)
+        static double calClassVariance(int number,double* class_mean,int* class_count,int number_of_class,double WeightAverage);//分組變異數(Class Variance)
     protected:
     private:
 };
