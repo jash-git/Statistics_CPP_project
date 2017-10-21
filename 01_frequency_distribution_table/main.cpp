@@ -80,6 +80,14 @@ int main()
     class_median=CStatistics::calClassMedian(number_of_class,number,class_limit_U,class_count,class_interval,Minimum_unit);
     CLib::outputData("class median",class_median);
 
+    double sample_mad=0;
+    sample_mad=CStatistics::calSampleMAD(data,number,sample_mean);
+    CLib::outputData("sample mad",sample_mad);
+
+    double class_mad=0;
+    class_mad=CStatistics::calClassMAD(number,class_mean,class_count,number_of_class,weight_average);
+    CLib::outputData("class mad",class_mad);
+
     CLib::pause();
     delete class_mean;
     delete class_count;

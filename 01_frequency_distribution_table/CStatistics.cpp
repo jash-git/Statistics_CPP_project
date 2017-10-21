@@ -59,7 +59,7 @@ double CStatistics::calInterval(double range,int number_of_class)//組距(class 
 
     return intAns;
 }
-double CStatistics::calSampleMean(double* array, int size)
+double CStatistics::calSampleMean(double* array, int size)//未分組平均
 {
     double dblAns=0;
 
@@ -71,7 +71,7 @@ double CStatistics::calSampleMean(double* array, int size)
 
     return dblAns;
 }
-double CStatistics::calWeightAverage(double* class_mean,int* class_count, int number_of_class,int number)
+double CStatistics::calWeightAverage(double* class_mean,int* class_count, int number_of_class,int number)//已分組平均
 {
     double dblAns=0;
 
@@ -83,7 +83,7 @@ double CStatistics::calWeightAverage(double* class_mean,int* class_count, int nu
 
     return dblAns;
 }
-void CStatistics::calClassLimit(double* data,int number,double class_interval,double *class_limit_L,double *class_limit_U,double *class_mean,int *class_count,int number_of_class,double Minimum_unit)
+void CStatistics::calClassLimit(double* data,int number,double class_interval,double *class_limit_L,double *class_limit_U,double *class_mean,int *class_count,int number_of_class,double Minimum_unit)//數據分組計算
 {
     double minvalue=0,maxvalue=0;
     int k=0,count_value=0;;
@@ -120,7 +120,7 @@ void CStatistics::calClassLimit(double* data,int number,double class_interval,do
         count_value=0;
     }
 }
-double CStatistics::calSampleMedian(double* data,int number)
+double CStatistics::calSampleMedian(double* data,int number)////未分組中數值
 {
     double dblAns=0;
     if((number%2)==0)
@@ -133,7 +133,7 @@ double CStatistics::calSampleMedian(double* data,int number)
     }
     return dblAns;
 }
-double CStatistics::calClassMedian(int number_of_class,int number,double *class_limit_U,int *class_count,double class_interval,double Minimum_unit)
+double CStatistics::calClassMedian(int number_of_class,int number,double *class_limit_U,int *class_count,double class_interval,double Minimum_unit)//已分組中數值
 {
     double dblAns=0;
     int index=0;
@@ -150,5 +150,25 @@ double CStatistics::calClassMedian(int number_of_class,int number,double *class_
     }
     dblAns=class_limit_U[index]-(class_interval/class_count[index])*(sum-(number/2))+Minimum_unit;
 
+    return dblAns;
+}
+double CStatistics::calSampleMAD(double* data,int number,double SampleMean)//樣本平均差(Sample Mean absolute deviation)
+{
+    double dblAns=0;
+    for(int i=0;i<number;i++)
+    {
+        dblAns+=fabs(data[i]-SampleMean);
+    }
+    dblAns/=number;
+    return dblAns;
+}
+double CStatistics::calClassMAD(int number,double* class_mean,int* class_count,int number_of_class,double WeightAverage)//分組平均差(Class Mean absolute deviation)
+{
+    double dblAns=0;
+    for(int i=0;i<number_of_class;i++)
+    {
+        dblAns+=fabs((class_mean[i]-WeightAverage)*class_count[i]);
+    }
+    dblAns/=number;
     return dblAns;
 }
